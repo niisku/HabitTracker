@@ -24,7 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //Creating the table schema:
-        String CREATE_TABLE = "CREATE_TABLE " + HabitEntry.TABLE_NAME + " (" +
+        String CREATE_TABLE = "CREATE TABLE " + HabitEntry.TABLE_NAME + " (" +
                 HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 HabitEntry.COLUMN_DATE + " REAL NOT NULL, " +
                 HabitEntry.COLUMN_TYPE + " TEXT NOT NULL, " +

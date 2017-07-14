@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
         db.insert(HabitEntry.TABLE_NAME, null, values);
     }
 
-    //Method for reading the existing data:
-    public void readData() {
-
+    public Cursor readDataCursor() {
         //Makes the database readable:
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         //Query all data into cursor:
-        Cursor c = db.query(HabitEntry.TABLE_NAME,
+        Cursor dataRead = db.query(HabitEntry.TABLE_NAME,
                 projection,
                 null,
                 null,
@@ -66,25 +64,30 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null);
 
-        //Reading the data:
+        return dataRead;
+
+    }
+
+    //This is just if all the data would be liked to store as String:
+    public void presentableData() {
+
         try {
 
             // Finding & naming the columns' indexes:
-            int idColumnIndex = c.getColumnIndex(HabitEntry._ID);
-            int dateColumnIndex = c.getColumnIndex(HabitEntry.COLUMN_DATE);
-            int typeColumnIndex = c.getColumnIndex(HabitEntry.COLUMN_TYPE);
-            int glassesColumnIndex = c.getColumnIndex(HabitEntry.COLUMN_GLASSES);
+            int idColumnIndex = readDataCursor().getColumnIndex(HabitEntry._ID);
+            int dateColumnIndex = readDataCursor().getColumnIndex(HabitEntry.COLUMN_DATE);
+            int typeColumnIndex = readDataCursor().getColumnIndex(HabitEntry.COLUMN_TYPE);
+            int glassesColumnIndex = readDataCursor().getColumnIndex(HabitEntry.COLUMN_GLASSES);
 
 
             //Going through all the rows + saving the data:
-            while (c.moveToNext()) {
+            while (readDataCursor().moveToNext()) {
 
-                int currentId = c.getInt(idColumnIndex);
-                float currentDate = c.getFloat(dateColumnIndex);
-                String currentType = c.getString(typeColumnIndex);
-                int currentGlasses = c.getInt(glassesColumnIndex);
+                int currentId = readDataCursor().getInt(idColumnIndex);
+                float currentDate = readDataCursor().getFloat(dateColumnIndex);
+                String currentType = readDataCursor().getString(typeColumnIndex);
+                int currentGlasses = readDataCursor().getInt(glassesColumnIndex);
 
-                //This is just if all the data would be liked to store as String:
                 allData = currentId + " | " +
                         currentDate + " | " +
                         currentType + " | " +
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } finally {
-            c.close();
+            readDataCursor().close();
         }
     }
 }

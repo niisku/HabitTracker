@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  */
 
 
-//"Content" of the table structure (= Table and Columns' names) 
+//"Content" of the table structure (= Table and Columns' names)
 public final class HabitContract {
 
     private HabitContract() {
